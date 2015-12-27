@@ -22,7 +22,10 @@ $app->render('webnav.php', array(
     <div class="span2">
     </div>
     <div class="span8">
-        fill me with input
+        <ul>
+          <li class="active">Channel 1</li>
+          <li>Some other random Channel 2</li>
+        </ul>
     </div>
     <div class="span2">
     </div>
