@@ -1,40 +1,35 @@
 <?php
 $app->render('webheader.php', array(
     'app' => $app,
+    'User'=>$User
 ));
 ?>
 
-<?php
-$app->render('webnav.php', array(
-    'app' => $app,
-));
-?>
+<div class="container">
 
+  <?php
+  $app->render('webnav.php', array(
+      'app' => $app,
+  ));
+  ?>
+  <?php #change me ?>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">&nbsp;</div>
+    </div>
 
-
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span12">
-      &nbsp;
+    <div class="row">
+      <div class="col-md-12">
+        <div class="list-group">
+          <button type="button" class="list-group-item">Channel 1</button>
+          <button type="button" class="list-group-item active"> <span class="badge">current</span> Channel 2</button>
+          <button type="button" class="list-group-item">Channel 3</button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row-fluid">
-    <div class="span2">
-    </div>
-    <div class="span8">
-        <ul>
-          <li class="active">Channel 1</li>
-          <li>Some other random Channel 2</li>
-        </ul>
-    </div>
-    <div class="span2">
-    </div>
-  </div>
-
-  </div>
+  <?php #stop changing ?>
 </div>
-
-
 <?php
 $app->render('webfooter.php', array(
     'app' => $app,

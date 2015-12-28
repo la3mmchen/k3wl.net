@@ -37,10 +37,21 @@
     }
   })->name('user');
 
+  $app->get('/profile', function () use ($app, $User) {
+    if ($User->isAuthed()) {
+      #->render('user.php', array());
+      echo "profile...to be implemented";
+    }
+    else {
+      $app->redirect($app->urlFor('login'));
+    }
+  })->name('profile');
+
   $app->get('/c/:username', function ($username) use ($app, $User) {
     if ($User->isAuthed()) {
       $app->render('channel.php', array(
-        'app'=>$app
+        'app'=>$app,
+        'User'=>$User
       ));
     }
     else {
