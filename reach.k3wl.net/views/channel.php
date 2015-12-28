@@ -21,7 +21,7 @@ $app->render('webheader.php', array(
     <div class="row">
       <div class="col-md-12">
         <div class="list-group">
-          <button type="button" class="list-group-item">Channel 1</button>
+          <button type="button" class="list-group-item btn btn-default" data-toggle="tooltip" data-placement="top" title="Activate">Channel 1</button>
           <button type="button" class="list-group-item active"> <span class="badge">current</span> Channel 2</button>
           <button type="button" class="list-group-item">Channel 3</button>
         </div>
