@@ -20,12 +20,13 @@
   }
 
   $app->get('/', function () use ($app, $User) {
-        if ($User->isAuthed()) {
-            echo "home";
-        }
-        else {
-          $app->response->redirect($app->urlFor('login'));
-        }
+      $app->render('home.php', array(
+        'app'=>$app,
+        'User'=>$User
+      ));
+      if (!$User->isAuthed()) {
+        $app->render('login_embedded.php');
+      }
   })->name('home');
 
   $app->get('/p/:username', function ($username) use ($app, $User) {
@@ -39,8 +40,10 @@
 
   $app->get('/profile', function () use ($app, $User) {
     if ($User->isAuthed()) {
-      #->render('user.php', array());
-      echo "profile...to be implemented";
+      $app->render('profile.php', array(
+        'app'=>$app,
+        'User'=>$User
+      ));
     }
     else {
       $app->redirect($app->urlFor('login'));
