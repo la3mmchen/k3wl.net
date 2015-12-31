@@ -10,6 +10,7 @@ $app->render('webheader.php', array(
   <?php
   $app->render('webnav.php', array(
       'app' => $app,
+      'site' => __FILE__
   ));
   ?>
   <?php #change me ?>
