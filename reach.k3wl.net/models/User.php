@@ -6,9 +6,11 @@ class User {
   public $UserId = 0;
   public $UserName = "";
   public $UserPassword = "";
+  public $UserChannels = array();
+  public $UserPublic = false;
 
   public function __construct() {
-      $this->UserPassword = "lala";
+      #$this->UserPassword = "lala";
   }
 
   public function auth($pass) {
@@ -21,7 +23,18 @@ class User {
 
   public function setName($string) {
       $this->UserName = $string;
+      $this->loadFromLocalStore();
       return true;
+  }
+
+  public function loadFromLocalStore() {
+      if ($this->UserName != "" && file_exists('localstore/'.$this->UserName.'.json')) {
+          $localObject = json_decode(file_get_contents('localstore/'.$this->UserName.'.json'));
+          $this->UserId = $localObject->UserId;
+          $this->UserPassword = $localObject->UserPassword;
+          $this->UserChannels = $localObject->UserChannels;
+          $this->UserPublic = $localObject->UserPublic;
+      }
   }
 
   public function isAuthed() {
