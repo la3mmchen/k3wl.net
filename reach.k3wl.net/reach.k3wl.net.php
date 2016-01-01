@@ -66,9 +66,10 @@
     }
   })->name('channel');
 
-  $app->get('/l', function () use ($app) {
+  $app->get('/l', function () use ($app, $User) {
     $app->render('login.php', array(
-      'app'=>$app
+      'app'=>$app,
+      'User'=>$User
     ));
   })->name('login');
 
