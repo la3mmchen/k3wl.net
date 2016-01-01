@@ -85,10 +85,9 @@
       $User->setName($app->request->post('user'));
       if ($User->auth($app->request->post('pass'))) {
         $app->setCookie('reach.k3wl.net', 'authed', '2 hour', 'k3wl.net');
-        $app->response->redirect($app->urlFor('channel', array(
-          'username'=>$User->UserName
-        )));
+        $app->redirect($app->urlFor('home'));
       }
+      $app->redirect($app->urlFor('home'));
   });
 
   $app->run();
