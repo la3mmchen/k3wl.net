@@ -37,6 +37,23 @@ class User {
       }
   }
 
+  public function toggleChannel($channel) {
+      if (isset($this->UserChannels->$channel->active) && $this->UserChannels->$channel->active) {
+        $this->UserChannels->$channel->active = false;
+        $this->UserChannels->$channel->lastupdate = time();
+      }
+      elseif (isset($this->UserChannels->$channel->active)){
+        $this->UserChannels->$channel->active = true;
+        $this->UserChannels->$channel->lastupdate = time();
+      }
+      $this->writeChanges();
+  }
+
+  private function writeChanges() {
+    unset($this->isAuthed);
+    file_put_contents('localstore/'.$this->UserName.'.json', json_encode($this));
+  }
+
   public function isAuthed() {
     return $this->isAuthed;
   }

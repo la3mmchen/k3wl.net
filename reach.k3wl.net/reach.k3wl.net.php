@@ -87,10 +87,20 @@
       $app->redirect($app->urlFor('home'));
   });
 
+  $app->get('/a/:username/:channel', function ($username, $channel) use ($app, $User) {
+    if ($User->isAuthed()) {
+      $User->setName($username);
+      $User->toggleChannel($channel);
+    }
+    $app->redirect($app->urlFor('channel', array('username'=>$username)));
+  })->name('activateChannel');
+
   $app->post('/l', function () use ($app, $User){
       $User->setName($app->request->post('user'));
       if ($User->auth($app->request->post('pass'))) {
         $app->setCookie('reach.k3wl.net', 'authed', '2 hour', 'k3wl.net');
+        session_cache_limiter(false);
+        session_start();
         $app->redirect($app->urlFor('home'));
       }
       $app->redirect($app->urlFor('home'));
