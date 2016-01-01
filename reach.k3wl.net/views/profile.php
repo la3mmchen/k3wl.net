@@ -15,12 +15,59 @@ $app->render('webheader.php', array(
     ));
   }
   ?>
+
   <div class="jumbotron">
-          <h2>under construction.</h1´2>
-          <p class="lead">
-            This is meant as a small playground.
-          </p>
-    </div>
+        <h2>Your profile settings:</h2>
+  </div>
+<div class="alert alert-warning" role="alert">You can only change certain value at the moment.</div>
+  <div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered">
+      <tr>
+        <td> UserId </td>
+        <td> <?=$User->UserId;?> </td>
+      </tr>
+      <tr>
+        <td> UserName: </td>
+        <td> <?=$User->UserName;?> </td>
+      </tr>
+      <tr class="warning">
+        <td colspan="2">
+          <div class="checkbox disabled">
+            <label>
+              <input type="checkbox" value=""
+              <?php if ($User->UserPublic) { ?>
+                checked
+              <?php } ?>
+              disabled> Profile public accessible?
+            </label>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td> UserId </td>
+        <td> <?=$User->UserId;?> </td>
+      </tr>
+      <tr class="warning">
+        <td colspan="2">
+          <div class="form-group">
+            <label for="UserPassword">Password</label>
+            <input type="password" class="form-control" id="UserPassword" value="<?=$User->UserPassword;?>">
+          </div>
+        </td>
+      </tr>
+      <?php if (isset($User->UserChannels)) { ?>
+        <?php foreach ($User->UserChannels as $key=>$value) {?>
+          <tr class="success">
+            <td><?=$value->name;?></td>
+            <td><?=var_dump($value);?></td>
+          </tr>
+        <?php } ?>
+      <?php }?>
+
+
+    </table>
+  </div>
+
   <?php #stop changing ?>
 </div>
 <?php
