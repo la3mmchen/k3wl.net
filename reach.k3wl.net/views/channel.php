@@ -22,9 +22,14 @@ $app->render('webheader.php', array(
     <div class="row">
       <div class="col-md-12">
         <div class="list-group">
-          <button type="button" class="list-group-item btn btn-default" data-toggle="tooltip" data-placement="top" title="Activate">Channel 1</button>
-          <button type="button" class="list-group-item active"> <span class="badge">current</span> Channel 2</button>
-          <button type="button" class="list-group-item">Channel 3</button>
+          <?php if (isset($Channels)) { ?>
+            <?php foreach ($Channels as $key=>$value) { ?>
+              <button type="button" class="list-group-item btn btn-default
+                <?php if ($value->active) echo "active"; ?>
+              " data-toggle="tooltip" data-placement="top" title="Activate"><span class="badge"><?=$value->details;?></span><?=$value->name;?></button>
+            <?php } ?>
+          <?php } ?>
+
         </div>
       </div>
     </div>

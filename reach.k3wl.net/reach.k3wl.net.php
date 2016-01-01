@@ -52,9 +52,13 @@
 
   $app->get('/c/:username', function ($username) use ($app, $User) {
     if ($User->isAuthed()) {
+      if (file_exists('localstore/default_channels.json')) {
+        $channels = json_decode( file_get_contents('localstore/default_channels.json'));
+      }
       $app->render('channel.php', array(
         'app'=>$app,
-        'User'=>$User
+        'User'=>$User,
+        'Channels'=>$channels->channels
       ));
     }
     else {
