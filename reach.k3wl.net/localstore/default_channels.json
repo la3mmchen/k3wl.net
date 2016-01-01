@@ -5,14 +5,14 @@
 			"id": 1,
 			"details": "0721",
 			"lastupdate": 0,
-      "active": 0
+      "active": false
 		},
 		"2": {
 			"name": "mail",
 			"id": 2,
 			"details": "a@b.c",
 			"lastupdate": 1451630011,
-      "active": 1
+      "active": true
 		}
 	}
 }
