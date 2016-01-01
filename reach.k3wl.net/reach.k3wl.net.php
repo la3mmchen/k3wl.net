@@ -7,16 +7,15 @@
   $app = new \Slim\Slim(array(
     'templates.path' => './views',
     'log.enabled' => true,
-    'log.level' => \Slim\Log::DEBUG,
-    'cookies.encrypt' => true,
-    'cookies.secret_key' => 'i391hr8934223rowjsjbfuiw',
-    'cookies.cipher' => MCRYPT_RIJNDAEL_256,
-    'cookies.cipher_mode' => MCRYPT_MODE_CBC
+    'log.level' => \Slim\Log::DEBUG
   ));
+  session_cache_limiter(false);
+  session_start();
   $app->setName('reach.k3wl.net');
 
-  if ($app->getCookie('reach.k3wl.net')) {
+  if ($_SESSION['isAuthed']) {
     $User->isAuthed = true;
+    $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   }
 
   $app->get('/', function () use ($app, $User) {
@@ -34,19 +33,20 @@
       $app->render('user.php', array());
     }
     else {
-      $app->redirect($app->urlFor('login'));
+      $app->redirect($app->urlFor('home'));
     }
   })->name('user');
 
   $app->get('/profile', function () use ($app, $User) {
     if ($User->isAuthed()) {
+      $User->setName($_SESSION['UserName']);
       $app->render('profile.php', array(
         'app'=>$app,
         'User'=>$User
       ));
     }
     else {
-      $app->redirect($app->urlFor('login'));
+      $app->redirect($app->urlFor('home'));
     }
   })->name('profile');
 
@@ -67,7 +67,7 @@
       ));
     }
     else {
-      $app->redirect($app->urlFor('login'));
+      $app->redirect($app->urlFor('home'));
     }
   })->name('channel');
 
@@ -79,8 +79,9 @@
   })->name('login');
 
   $app->get('/logout', function () use ($app) {
-    $app->deleteCookie('reach.k3wl.net');
-    $app->redirect($app->urlFor('login'));
+    session_unset();
+    session_destroy();
+    $app->redirect($app->urlFor('home'));
   })->name('logout');
 
   $app->notFound(function () use ($app) {
@@ -98,9 +99,8 @@
   $app->post('/l', function () use ($app, $User){
       $User->setName($app->request->post('user'));
       if ($User->auth($app->request->post('pass'))) {
-        $app->setCookie('reach.k3wl.net', 'authed', '2 hour', 'k3wl.net');
-        session_cache_limiter(false);
-        session_start();
+        $_SESSION['UserName'] = $User->UserName;
+        $_SESSION['isAuthed'] = true;
         $app->redirect($app->urlFor('home'));
       }
       $app->redirect($app->urlFor('home'));
