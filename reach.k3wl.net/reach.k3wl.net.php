@@ -9,14 +9,31 @@
     'log.enabled' => true,
     'log.level' => \Slim\Log::DEBUG
   ));
+
+  # Session handling
   session_cache_limiter(false);
   session_start();
-  $app->setName('reach.k3wl.net');
+
+  if (!isset($_SESSION['CREATED'])) {
+      $_SESSION['CREATED'] = time();
+  }
+  else if (time() - $_SESSION['CREATED'] > 1800) { // session started more than 30 minutes ago
+      session_regenerate_id(true);
+      $_SESSION['CREATED'] = time();
+  }
 
   if ($_SESSION['isAuthed']) {
     $User->isAuthed = true;
     $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   }
+
+  if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time
+    session_destroy();   // destroy session data in storage
+}
+
+  $app->setName('reach.k3wl.net');
 
   $app->get('/', function () use ($app, $User) {
       $app->render('home.php', array(
