@@ -22,16 +22,18 @@
       $_SESSION['CREATED'] = time();
   }
 
+  if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time
+    session_destroy();   // destroy session data in storage
+  }
+
   if ($_SESSION['isAuthed']) {
     $User->isAuthed = true;
     $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   }
 
-  if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
-    // last request was more than 30 minutes ago
-    session_unset();     // unset $_SESSION variable for the run-time
-    session_destroy();   // destroy session data in storage
-}
+
 
   $app->setName('reach.k3wl.net');
 
@@ -122,6 +124,19 @@
       }
       $app->redirect($app->urlFor('home'));
   });
+
+  $app->post('/update/:type', function($type) use ($app, $User){
+      $User->setName($_SESSION['UserName']);
+      if ($app->request->post('UserPublic')) {
+        $User->UserPublic = true;
+      }
+
+      if ($app->request->post('UserPassword')&& $app->request->post('UserPassword') != "") {
+        $User->UserPassword = $app->request->post('UserPassword');
+      }
+      $User->writeChanges();
+      $app->redirect($app->urlFor('profile'));
+  })->name('update');
 
   $app->run();
 ?>

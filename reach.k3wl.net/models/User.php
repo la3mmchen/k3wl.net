@@ -49,9 +49,10 @@ class User {
       $this->writeChanges();
   }
 
-  private function writeChanges() {
+  public function writeChanges() {
     unset($this->isAuthed);
     file_put_contents('localstore/'.$this->UserName.'.json', json_encode($this));
+    $this->isAuthed = true;
   }
 
   public function isAuthed() {
