@@ -14,7 +14,7 @@ class User {
   }
 
   public function auth($pass) {
-      if ($pass == $this->UserPassword) {
+      if (password_verify($pass, $this->UserPassword)) {
         $this->isAuthed = true;
         return $this->isAuthed;
       }

@@ -132,7 +132,7 @@
       }
 
       if ($app->request->post('UserPassword')&& $app->request->post('UserPassword') != "") {
-        $User->UserPassword = $app->request->post('UserPassword');
+        $User->UserPassword = password_hash($app->request->post('UserPassword'), PASSWORD_DEFAULT);
       }
       $User->writeChanges();
       $app->redirect($app->urlFor('profile'));
