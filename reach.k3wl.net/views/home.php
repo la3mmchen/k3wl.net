@@ -22,7 +22,14 @@ $app->render('webheader.php', array(
             So far there is no way. This might be one solution. So give it a try.
           </p>
     </div>
-    <div class="alert alert-info" role="alert">You might notive we are still very beta. So give a hint, there is a reach.k3wl.net user to show you how do you can contact us. Otherwise drop us a mail.</div>
+    <div class="alert alert-success" role="alert">You might notice we are still very beta. So give a hint, there is a <a href="<?=$app->urlFor('user', array('username'=>$app->getName()));?>"><?=$app->getName();?> user</a> to show you how do you can contact us. Otherwise drop us a mail.</div>
+
+    <?php
+      if (!$User->isAuthed()) {
+        $app->render('login_embedded.php');
+      }
+    ?>
+
   <?php #stop changing ?>
 </div>
 <?php
