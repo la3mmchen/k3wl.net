@@ -14,30 +14,26 @@ $app->render('webheader.php', array(
   ));
   ?>
   <?php #change me ?>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">&nbsp;</div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-12">
-        <div class="list-group">
-          <?php if (isset($Channels)) { ?>
-            <?php foreach ($Channels as $key=>$value) {
+  <div class="jumbotron">
+          <h1><span class="glyphicon glyphicon-list" aria-hidden="true"></span> <?=$User->UserName;?></h1>
+          <p class="lead">
+            You can toggle your channels by clicking on them.
+          </p>
+  </div>
+
+  <?php if (!empty ($User->UserChannels)) { ?>
+    <div class="row channels">
+          <?php foreach ($User->UserChannels as $key=>$Channel) {
+              $LocChannel = new Channel($Channel);
               $app->render('embedded/Channel.php', array(
                 'app'=>$app,
                 'User'=>$User,
-                'Channel'=>$value
+                'Channel'=>$LocChannel,
               ));
-              ?>
-
-            <?php } ?>
-          <?php } ?>
-
-        </div>
-      </div>
+          } ?>
     </div>
-  </div>
+  <?php } ?>
   <?php #stop changing ?>
 </div>
 <?php

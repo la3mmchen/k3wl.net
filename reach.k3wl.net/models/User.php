@@ -23,8 +23,7 @@ class User {
 
   public function setName($string) {
       $this->UserName = $string;
-      $this->loadFromLocalStore();
-      return true;
+      return $this->loadFromLocalStore();
   }
 
   public function loadFromLocalStore() {
@@ -32,9 +31,18 @@ class User {
           $localObject = json_decode(file_get_contents('localstore/'.$this->UserName.'.json'));
           $this->UserId = $localObject->UserId;
           $this->UserPassword = $localObject->UserPassword;
-          $this->UserChannels = $localObject->UserChannels;
-          $this->UserPublic = $localObject->UserPublic;
+          if (isset($localObject->UserChannels)) $this->UserChannels = $localObject->UserChannels;
+          if (isset($localObject->UserPublic)) {
+            $this->UserPublic = $localObject->UserPublic;
+          }
+          else {
+            $this->UserPublic = false;
+          }
+          return true;
       }
+      else
+        return false;
+
   }
 
   public function toggleChannel($channel) {

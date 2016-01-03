@@ -1,7 +1,47 @@
+<?php
+$app->render('webheader.php', array(
+    'app' => $app,
+    'User'=>$User
+));
+?>
 
-    <div class="row-fluid">
-      <div class="span2">&nbsp;</div>
-      <div class="span10">
-        hi
-      </div>
+<div class="container">
+
+  <?php
+  $app->render('webnav.php', array(
+        'app' => $app,
+        'site' => __FILE__
+  ));?>
+
+
+
+  <div class="jumbotron">
+          <h1><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?=$User->UserName;?></h1>
+          <p class="lead">
+            Public profile.
+          </p>
+  </div>
+
+  <?php if (!empty ($User->UserChannels)) { ?>
+    <div class="row channels">
+          <?php foreach ($User->UserChannels as $key=>$Channel) {
+              $LocChannel = new Channel($Channel);
+              if ($Channel->active) {
+                $app->render('embedded/ChannelPublic.php', array(
+                  'app'=>$app,
+                  'User'=>$User,
+                  'Channel'=>$LocChannel,
+                ));
+              }
+            } ?>
     </div>
+  <?php } ?>
+
+
+  <?php #stop changing ?>
+</div>
+<?php
+$app->render('webfooter.php', array(
+    'app' => $app,
+));
+?>

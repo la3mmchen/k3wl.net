@@ -19,7 +19,7 @@ $app->render('webheader.php', array(
   <div class="jumbotron">
         <h2>Your profile settings:</h2>
   </div>
-  <div class="alert alert-warning" role="alert">You can only change certain value at the moment.</div>
+  <div class="alert alert-warning" role="alert">You can only change certain values at the moment.</div>
   <div class="table-responsive">
     <form class="form-inline" method="post" action="<?=$app->urlFor('update');?>">
       <table class="table table-hover table-striped table-bordered">
@@ -44,10 +44,6 @@ $app->render('webheader.php', array(
             </div>
           </td>
         </tr>
-        <tr>
-          <td> UserId </td>
-          <td> <?=$User->UserId;?> </td>
-        </tr>
         <tr class="warning">
           <td colspan="2">
             <div class="form-group">
@@ -57,19 +53,21 @@ $app->render('webheader.php', array(
           </td>
         </tr>
         <?php if (isset($User->UserChannels)) { ?>
-          <?php foreach ($User->UserChannels as $key=>$value) {?>
-            <tr>
-              <td colspan="2">
-                <?php
-                  $app->render('embedded/Channel.php', array(
-                    'app'=>$app,
-                    'User'=>$User,
-                    'Channel'=>$value
-                  ));
-                ?>
+          <tr>
+            <td colspan="2">
+              <?php foreach ($User->UserChannels as $key=>$value) {?>
+
+                    <?php
+                      $LocChannel = new Channel($value);
+                      $app->render('embedded/Channel.php', array(
+                        'app'=>$app,
+                        'User'=>$User,
+                        'Channel'=>$LocChannel,
+                      ));
+                    ?>
+              <?php } ?>
             </td>
-            </tr>
-          <?php } ?>
+          </tr>
         <?php }?>
         <tr>
           <td colspan="2">
@@ -77,6 +75,13 @@ $app->render('webheader.php', array(
             <button type="reset" class="btn btn-default">Reset</button>
           </td>
         </tr>
+        <?php if ($User->UserPublic) { ?>
+          <tr>
+            <td colspan="2">Link to your Public profile:
+              <a href="<?=$app->urlFor('user', array('username'=>$_SESSION['UserName']));?>"><?=$app->urlFor('user', array('username'=>$_SESSION['UserName']));?></a>
+            </td>
+          </tr>
+        <?php } ?>
 
 
       </table>

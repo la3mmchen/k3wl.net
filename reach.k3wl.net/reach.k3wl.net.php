@@ -3,6 +3,7 @@
   \Slim\Slim::registerAutoloader();
 
   include './models/User.php'; # Load User Class
+  include './models/Channel.php'; # Load Channel Class
   $User = new User();
   $app = new \Slim\Slim(array(
     'templates.path' => './views',
@@ -28,12 +29,10 @@
     session_destroy();   // destroy session data in storage
   }
 
-  if ($_SESSION['isAuthed']) {
+  if (isset($_SESSION['isAuthed']) && $_SESSION['isAuthed']) {
     $User->isAuthed = true;
     $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
   }
-
-
 
   $app->setName('reach.k3wl.net');
 
@@ -45,16 +44,23 @@
   })->name('home');
 
   $app->get('/p/:username', function ($username) use ($app, $User) {
-    if ($User->isAuthed()) {
-      $app->render('user.php', array());
+    $UserToView = new User();
+    if ($UserToView->setName($username) && $UserToView->UserPublic) {
+      $app->render('user.php', array(
+        'app'=>$app,
+        'User'=>$UserToView
+      ));
     }
     else {
-      $app->redirect($app->urlFor('home'));
+      $app->render('userNotFound.php', array(
+        'app'=>$app,
+        'User'=>$User
+      ));
     }
   })->name('user');
 
   $app->get('/profile', function () use ($app, $User) {
-    if ($User->isAuthed()) {
+    if ($_SESSION['isAuthed']) {
       $User->setName($_SESSION['UserName']);
       $app->render('profile.php', array(
         'app'=>$app,
@@ -67,7 +73,7 @@
   })->name('profile');
 
   $app->get('/c/:username', function ($username) use ($app, $User) {
-    if ($User->isAuthed()) {
+    if ($_SESSION['isAuthed']) {
       $User->setName($username);
       $locChannels = array();
       if (isset($User->UserChannels)) {
@@ -105,7 +111,7 @@
   });
 
   $app->get('/a/:username/:channel', function ($username, $channel) use ($app, $User) {
-    if ($User->isAuthed()) {
+    if ($_SESSION['isAuthed']) {
       $User->setName($username);
       $User->toggleChannel($channel);
     }
