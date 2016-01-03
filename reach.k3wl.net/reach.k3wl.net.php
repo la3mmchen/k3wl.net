@@ -42,9 +42,6 @@
         'app'=>$app,
         'User'=>$User
       ));
-      if (!$User->isAuthed()) {
-        $app->render('login_embedded.php');
-      }
   })->name('home');
 
   $app->get('/p/:username', function ($username) use ($app, $User) {
