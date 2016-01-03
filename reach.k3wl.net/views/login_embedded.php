@@ -8,8 +8,11 @@
 
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password"name="pass" required>
+        <label> <input type="checkbox" id="captcha" name="captcha"> I'm a robot.
+        </label>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Start now</button>
       </form>
+      <em>Just fill the upper fields, we create automatically an user if there is no one with that name. </em>
     </div>
   </div>
 </div>

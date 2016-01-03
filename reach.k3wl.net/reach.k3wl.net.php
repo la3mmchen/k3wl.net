@@ -119,11 +119,22 @@
   })->name('activateChannel');
 
   $app->post('/l', function () use ($app, $User){
-      $User->setName($app->request->post('user'));
-      if ($User->auth($app->request->post('pass'))) {
+      if ($User->exists($app->request->post('user'))) {
+        $User->setName($app->request->post('user'));
+        if ($User->auth($app->request->post('pass'))) {
+          $_SESSION['UserName'] = $User->UserName;
+          $_SESSION['isAuthed'] = true;
+          $app->redirect($app->urlFor('channel'));
+        }
+      }
+      else {
+        $User->UserName = $app->request->post('user');
+        $User->UserPassword = password_hash($app->request->post('pass'), PASSWORD_DEFAULT);
+        $User->UserId = uniqid();
         $_SESSION['UserName'] = $User->UserName;
         $_SESSION['isAuthed'] = true;
-        $app->redirect($app->urlFor('home'));
+        $User->writeChanges();
+        $app->redirect($app->urlFor('channel'));
       }
       $app->redirect($app->urlFor('home'));
   });

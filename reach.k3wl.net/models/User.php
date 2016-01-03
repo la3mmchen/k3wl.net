@@ -10,7 +10,11 @@ class User {
   public $UserPublic = false;
 
   public function __construct() {
-      #$this->UserPassword = "lala";
+
+  }
+
+  public function exists($name) {
+      return file_exists('localstore/'.$name.'.json');
   }
 
   public function auth($pass) {
@@ -24,6 +28,11 @@ class User {
   public function setName($string) {
       $this->UserName = $string;
       return $this->loadFromLocalStore();
+  }
+
+  public function createUser() {
+
+    return true;
   }
 
   public function loadFromLocalStore() {
