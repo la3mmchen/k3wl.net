@@ -23,7 +23,7 @@ $app->render('webheader.php', array(
             So far there is no way. This might be one solution. So give it a try.
           </p>
     </div>
-    <div class="alert alert-success" role="alert">You might notice we are still very beta. To give a hint if something is broken, there is a <a href="<?=$app->urlFor('user', array('username'=>$app->getName()));?>"><?=$app->getName();?> user</a> to show you how do you can contact us. <br/>Otherwise drop us a mail.</div>
+    <div class="alert alert-success" role="alert">You might notice we are still very beta. To give a hint if something is broken, there is a <a href="<?=$app->urlFor('user', array('username'=>$app->getName()));?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?=$app->getName();?> user</a> to show you how do you can contact us. <br/>Otherwise drop us a mail.</div>
 
     <?php
       if (!$User->isAuthed()) {

@@ -16,7 +16,7 @@
          <li role="presentation"
          <?php if (isset($site) && preg_match('/profile/', $site))
             echo 'class="active"'; ?>
-          ><a href="<?=$app->urlFor('profile');?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
+          ><a href="<?=$app->urlFor('profile');?>"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a></li>
       <?php } ?>
       <?php if (isset($_SESSION['isAuthed']) &&$_SESSION['isAuthed']) {?>
          <li role="presentation">

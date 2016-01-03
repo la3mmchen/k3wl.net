@@ -17,7 +17,7 @@ $app->render('webheader.php', array(
   ?>
 
   <div class="jumbotron">
-        <h2>Your profile settings:</h2>
+        <h1><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Your profile settings:</h1>
   </div>
   <div class="alert alert-warning" role="alert">You can only change certain values at the moment.</div>
   <div class="table-responsive">
@@ -55,11 +55,11 @@ $app->render('webheader.php', array(
         <?php if (isset($User->UserChannels)) { ?>
           <tr>
             <td colspan="2">
+              Your Channels: <br/>
               <?php foreach ($User->UserChannels as $key=>$value) {?>
-
                     <?php
                       $LocChannel = new Channel($value);
-                      $app->render('embedded/Channel.php', array(
+                      $app->render('embedded/ChannelPublic.php', array(
                         'app'=>$app,
                         'User'=>$User,
                         'Channel'=>$LocChannel,
@@ -71,7 +71,7 @@ $app->render('webheader.php', array(
         <?php }?>
         <tr>
           <td colspan="2">
-            <button type="submit" class="btn btn-default">Save</button>
+            <button type="submit" class="btn btn btn-success"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>
             <button type="reset" class="btn btn-default">Reset</button>
           </td>
         </tr>
