@@ -58,9 +58,16 @@ $app->render('webheader.php', array(
         </tr>
         <?php if (isset($User->UserChannels)) { ?>
           <?php foreach ($User->UserChannels as $key=>$value) {?>
-            <tr class="success">
-              <td><?=$value->name;?></td>
-              <td><?=var_dump($value);?></td>
+            <tr>
+              <td colspan="2">
+                <?php
+                  $app->render('embedded/Channel.php', array(
+                    'app'=>$app,
+                    'User'=>$User,
+                    'Channel'=>$value
+                  ));
+                ?>
+            </td>
             </tr>
           <?php } ?>
         <?php }?>
