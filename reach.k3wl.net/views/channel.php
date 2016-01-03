@@ -27,8 +27,7 @@ $app->render('webheader.php', array(
               $app->render('embedded/Channel.php', array(
                 'app'=>$app,
                 'User'=>$User,
-                'key'=>$key,
-                'value'=>$value
+                'Channel'=>$value
               ));
               ?>
 
