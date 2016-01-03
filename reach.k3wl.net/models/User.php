@@ -49,8 +49,7 @@ class User {
       $arrayPos;
       $ChannelObject;
       foreach ($this->UserChannels as $i => $value) {
-        echo $i."-".$value;
-        if (preg_match('/'.$channel.'/', $value))
+        if (preg_match('/'.$channel.'/', $value)) {
           $ChannelObject = json_decode($value);
           if ($ChannelObject->ChannelActive) {
             $ChannelObject->ChannelActive = false;
@@ -61,6 +60,7 @@ class User {
           $ChannelObject->ChannelLastUpdate = time();
           $arrayPos = $i;
           break;
+        }
       }
       $this->UserChannels[$i] = json_encode($ChannelObject);
       $this->writeChanges();
