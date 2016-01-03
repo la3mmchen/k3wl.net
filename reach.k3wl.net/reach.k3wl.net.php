@@ -127,6 +127,9 @@
       if ($app->request->post('UserPublic')) {
         $User->UserPublic = true;
       }
+      else {
+        $User->UserPublic = false;
+      }
 
       if ($app->request->post('UserPassword')&& $app->request->post('UserPassword') != "") {
         $User->UserPassword = password_hash($app->request->post('UserPassword'), PASSWORD_DEFAULT);
