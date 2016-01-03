@@ -1,5 +1,5 @@
 <?php
-  require '../Slim/slim.php';
+  require '../Slim/Slim.php';
   \Slim\Slim::registerAutoloader();
 
   include './models/User.php'; # Load User Class
