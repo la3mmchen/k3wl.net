@@ -9,19 +9,35 @@ class Channel {
   public $ChannelActive = false;
   public $ChannelType = "";
 
-  public function __construct($input) {
-    if (isset($input->id))
-      $this->ChannelId = $input->id;
-    if (isset($input->name))
-      $this->ChannelName = $input->name;
-    if (isset($input->details))
-      $this->ChannelDetails = $input->details;
-   if (isset($input->lastupdate))
-      $this->ChannelLastUpdate = $input->lastupdate;
-    if (isset($input->active))
-      $this->ChannelActive = $input->active;
-    if (isset($input->type))
-      $this->ChannelType = $input->type;
+  public function __construct() {
+      $a = func_get_args();
+      $i = func_num_args();
+      if (method_exists($this,$f='__construct'.$i)) {
+          call_user_func_array(array($this,$f),$a);
+      }
+  }
+
+  public function __construct1($input) {
+      if (isset($input->ChannelId))
+        $this->ChannelId = $input->ChannelId;
+      if (isset($input->ChannelName))
+        $this->ChannelName = $input->ChannelName;
+      if (isset($input->ChannelDetails))
+        $this->ChannelDetails = $input->ChannelDetails;
+     if (isset($input->ChannelLastUpdate))
+        $this->ChannelLastUpdate = $input->ChannelLastUpdate;
+      if (isset($input->ChannelActive))
+        $this->ChannelActive = $input->ChannelActive;
+      if (isset($input->ChannelType))
+        $this->ChannelType = $input->ChannelType;
+  }
+
+  public function __construct2($a1,$a2) {
+      echo('__construct with 2 params called: '.$a1.','.$a2.PHP_EOL);
+  }
+
+  public function __construct3($a1,$a2,$a3) {
+      echo('__construct with 3 params called: '.$a1.','.$a2.','.$a3.PHP_EOL);
   }
 
   public function getIcon() {

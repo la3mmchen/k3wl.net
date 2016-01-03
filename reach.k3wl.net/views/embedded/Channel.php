@@ -1,7 +1,14 @@
 <div class="col-xs-4">
   <h4><?=$Channel->getIcon();?> <?=$Channel->ChannelName;?></h4>
 
-  <p>Last updated: <em><?=$Channel->updatedAgo();?></em>.</p>
+  <p>Last updated:
+  <?php if ($Channel->ChannelLastUpdate == 0) { ?>
+    <em> never </em>
+  <?php }
+  else { ?>
+    <em><?=$Channel->updatedAgo();?></em>
+  <?php }?>
+  </p>
 
   <a href="<?=$app->urlFor('activateChannel', array('username'=>$User->UserName, 'channel'=>$Channel->ChannelId));?>">
   <button type="button" class="list-group-item btn btn-default

@@ -10,7 +10,7 @@
          <li role="presentation"
            <?php if (isset($site) && preg_match('/channel/', $site))
               echo 'class="active"'; ?>
-           ><a href="<?=$app->urlFor('channel', array('username'=>'alex'));?>"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a></li>
+           ><a href="<?=$app->urlFor('channel');?>"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a></li>
        <?php } ?>
        <?php if (isset($_SESSION['isAuthed']) &&$_SESSION['isAuthed']) {?>
          <li role="presentation"

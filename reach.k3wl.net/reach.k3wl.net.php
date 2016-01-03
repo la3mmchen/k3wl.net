@@ -60,7 +60,7 @@
   })->name('user');
 
   $app->get('/profile', function () use ($app, $User) {
-    if ($_SESSION['isAuthed']) {
+    if (isset($_SESSION['isAuthed']) && $_SESSION['isAuthed']) {
       $User->setName($_SESSION['UserName']);
       $app->render('profile.php', array(
         'app'=>$app,
@@ -72,9 +72,9 @@
     }
   })->name('profile');
 
-  $app->get('/c/:username', function ($username) use ($app, $User) {
-    if ($_SESSION['isAuthed']) {
-      $User->setName($username);
+  $app->get('/channels', function () use ($app, $User) {
+    if (isset($_SESSION['isAuthed']) && $_SESSION['isAuthed']) {
+      $User->setName($_SESSION['UserName']);
       $locChannels = array();
       if (isset($User->UserChannels)) {
         $locChannels = $User->UserChannels;
@@ -110,10 +110,10 @@
       $app->redirect($app->urlFor('home'));
   });
 
-  $app->get('/a/:username/:channel', function ($username, $channel) use ($app, $User) {
-    if ($_SESSION['isAuthed']) {
+  $app->get('/a/:username/:channel', function ($username, $channeluniquid) use ($app, $User) {
+    if (isset($_SESSION['isAuthed']) && $_SESSION['isAuthed']) {
       $User->setName($username);
-      $User->toggleChannel($channel);
+      $User->toggleChannel($channeluniquid);
     }
     $app->redirect($app->urlFor('channel', array('username'=>$username)));
   })->name('activateChannel');
@@ -143,6 +143,23 @@
       $User->writeChanges();
       $app->redirect($app->urlFor('profile'));
   })->name('update');
+
+  $app->post('/c', function() use ($app, $User){
+      $NewChannel = new Channel();
+      $NewChannel->ChannelId = uniqid();
+      if ($app->request->post('ChannelName')) {
+        $NewChannel->ChannelName = $app->request->post('ChannelName');
+      }
+      if ($app->request->post('ChannelDetails')) {
+        $NewChannel->ChannelDetails = $app->request->post('ChannelDetails');
+      }
+      $NewChannel->ChannelType = "unknown";
+
+      $User->setName($_SESSION['UserName']);
+      array_push($User->UserChannels, json_encode($NewChannel));
+      $User->writeChanges();
+      $app->redirect($app->urlFor('channel'));
+  })->name('addChannel');
 
   $app->run();
 ?>

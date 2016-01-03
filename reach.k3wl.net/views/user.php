@@ -24,9 +24,9 @@ $app->render('webheader.php', array(
 
   <?php if (!empty ($User->UserChannels)) { ?>
     <div class="row channels">
-          <?php foreach ($User->UserChannels as $key=>$Channel) {
-              $LocChannel = new Channel($Channel);
-              if ($Channel->active) {
+          <?php foreach ($User->UserChannels as $value) {
+              $LocChannel = new Channel(json_decode($value));
+              if ($LocChannel->ChannelActive) {
                 $app->render('embedded/ChannelPublic.php', array(
                   'app'=>$app,
                   'User'=>$User,

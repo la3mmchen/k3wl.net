@@ -56,9 +56,9 @@ $app->render('webheader.php', array(
           <tr>
             <td colspan="2">
               Your Channels: <br/>
-              <?php foreach ($User->UserChannels as $key=>$value) {?>
+              <?php foreach ($User->UserChannels as $value) {?>
                     <?php
-                      $LocChannel = new Channel($value);
+                      $LocChannel = new Channel(json_decode($value));
                       $app->render('embedded/ChannelPublic.php', array(
                         'app'=>$app,
                         'User'=>$User,
