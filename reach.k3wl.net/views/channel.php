@@ -20,7 +20,7 @@ $app->render('webheader.php', array(
           <p class="lead">
             You can toggle your channels by clicking on them.
             <br/><br/>
-            <button type="submit" class="btn btn btn-info btn-lg" data-toggle="modal" data-target="#addChannel"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create a new channel.</button>
+            <button type="submit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addChannel"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create a new channel.</button>
           </p>
           <?php
             $app->render('modals/addChannel.php');
