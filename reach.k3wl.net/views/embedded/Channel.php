@@ -15,6 +15,8 @@
     <?php if ($Channel->ChannelActive) echo "active"; ?>
   " data-toggle="tooltip" data-placement="top" title="Turn on/off"><span class="badge"><?=$Channel->ChannelDetails;?></span><?=$Channel->ChannelName;?>
   </button></a>
-  <button class="btn btn-info btn-xs" type="button"><span aria-hidden="true" class="glyphicon glyphicon-wrench"></span> edit</button>
-  <button class="btn btn-warning btn-xs" type="button"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span> delete</button>
+  <p class="text-right">
+  <button class="btn btn-info btn-xs" type="button"><span aria-hidden="true" class="glyphicon glyphicon-wrench"></span> </button>
+  <button class="btn btn-warning btn-xs" type="button"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></button>
+</p>
 </div>
