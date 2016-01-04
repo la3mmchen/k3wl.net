@@ -34,9 +34,6 @@ $app->render('webheader.php', array(
             <input type="text" class="form-control" id="UserPassword" placeholder="New Password" name="UserPassword">
           </div>
         </p>
-      </div>
-
-      <div class="col-xs-4">
         <h4>Public profile</h4>
         <p>
           <div class="checkbox">
@@ -48,6 +45,14 @@ $app->render('webheader.php', array(
               > Profile public accessible?
             </label>
           </div>
+        </p>
+      </div>
+
+      <div class="col-xs-4">
+        <h4>Actions</h4>
+        <p>
+          <button type="submit" class="btn btn btn-success"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>
+          <button type="reset" class="btn btn-default">Reset</button>
         </p>
       </div>
     </form>
