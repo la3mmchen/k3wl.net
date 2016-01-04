@@ -17,74 +17,39 @@ $app->render('webheader.php', array(
   ?>
 
   <div class="jumbotron">
-        <h1><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Your profile settings:</h1>
+        <h1><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> <?=$User->UserName?></h1>
+        <p>These are the settings for your account.
+        <br/>
+        A <b>Public Profile</b> is opposed to any visiters on this site. </p>
   </div>
   <div class="alert alert-warning" role="alert">You can only change certain values at the moment.</div>
-  <div class="table-responsive">
+
+  <div class="row channels">
     <form class="form-inline" method="post" action="<?=$app->urlFor('update');?>">
-      <table class="table table-hover table-striped table-bordered">
-        <tr>
-          <td> UserId </td>
-          <td> <?=$User->UserId;?> </td>
-        </tr>
-        <tr>
-          <td> UserName: </td>
-          <td> <?=$User->UserName;?> </td>
-        </tr>
-        <tr class="warning">
-          <td colspan="2">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" name="UserPublic" value="true"
-                <?php if ($User->UserPublic) { ?>
-                  checked
-                <?php } ?>
-                > Profile public accessible?
-              </label>
-            </div>
-          </td>
-        </tr>
-        <tr class="warning">
-          <td colspan="2">
-            <div class="form-group">
-              <label for="UserPassword">Password</label>
-              <input type="text" class="form-control" id="UserPassword" placeholder="New Password" name="UserPassword">
-            </div>
-          </td>
-        </tr>
-        <?php if (isset($User->UserChannels)) { ?>
-          <tr>
-            <td colspan="2">
-              Your Channels: <br/>
-              <?php foreach ($User->UserChannels as $value) {?>
-                    <?php
-                      $LocChannel = new Channel(json_decode($value));
-                      $app->render('embedded/ChannelPublic.php', array(
-                        'app'=>$app,
-                        'User'=>$User,
-                        'Channel'=>$LocChannel,
-                      ));
-                    ?>
+      <div class="col-xs-4">
+        <h4>Set a new password</h4>
+        <p>
+          <div class="form-group">
+            <label for="UserPassword">Password</label>
+            <input type="text" class="form-control" id="UserPassword" placeholder="New Password" name="UserPassword">
+          </div>
+        </p>
+      </div>
+
+      <div class="col-xs-4">
+        <h4>Public profile</h4>
+        <p>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="UserPublic" value="true"
+              <?php if ($User->UserPublic) { ?>
+                checked
               <?php } ?>
-            </td>
-          </tr>
-        <?php }?>
-        <tr>
-          <td colspan="2">
-            <button type="submit" class="btn btn btn-success"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>
-            <button type="reset" class="btn btn-default">Reset</button>
-          </td>
-        </tr>
-        <?php if ($User->UserPublic) { ?>
-          <tr>
-            <td colspan="2">Link to your Public profile:
-              <a href="<?=$app->urlFor('user', array('username'=>$_SESSION['UserName']));?>"><?=$app->urlFor('user', array('username'=>$_SESSION['UserName']));?></a>
-            </td>
-          </tr>
-        <?php } ?>
-
-
-      </table>
+              > Profile public accessible?
+            </label>
+          </div>
+        </p>
+      </div>
     </form>
   </div>
 
