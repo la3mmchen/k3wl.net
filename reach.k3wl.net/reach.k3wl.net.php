@@ -119,6 +119,7 @@
   })->name('activateChannel');
 
   $app->post('/l', function () use ($app, $User){
+    if ($app->request->post('captcha') == NULL) {
       if ($User->exists($app->request->post('user'))) {
         $User->setName($app->request->post('user'));
         if ($User->auth($app->request->post('pass'))) {
@@ -136,8 +137,12 @@
         $User->writeChanges();
         $app->redirect($app->urlFor('channel'));
       }
+    }
+    else {
+    # Implement some action
+    }
       $app->redirect($app->urlFor('home'));
-  });
+  })->name('loginPost');
 
   $app->post('/update/:type', function($type) use ($app, $User){
       $User->setName($_SESSION['UserName']);
