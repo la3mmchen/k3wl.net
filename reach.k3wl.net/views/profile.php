@@ -49,6 +49,12 @@ $app->render('webheader.php', array(
       </div>
 
       <div class="col-xs-4">
+        <?php if ($User->UserPublic) { ?>
+        <h4>Link to your Public profile</h4>
+        <p>
+          <a href="<?=$app->urlFor('user', array('username'=>$_SESSION['UserName']));?>"><?=$app->urlFor('user', array('username'=>$_SESSION['UserName']));?></a>
+        </p>
+        <?php } ?>
         <h4>Actions</h4>
         <p>
           <button type="submit" class="btn btn btn-success"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save</button>
