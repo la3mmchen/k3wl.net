@@ -93,13 +93,6 @@
     }
   })->name('channel');
 
-  $app->get('/l', function () use ($app, $User) {
-    $app->render('login.php', array(
-      'app'=>$app,
-      'User'=>$User
-    ));
-  })->name('login');
-
   $app->get('/logout', function () use ($app) {
     session_unset();
     session_destroy();
