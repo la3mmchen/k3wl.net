@@ -4,7 +4,9 @@
 
   include './models/User.php'; # Load User Class
   include './models/Channel.php'; # Load Channel Class
+  include './models/Helper.php'; # Load Helper Class
   $User = new User();
+  $Helper = new Helper();
   $app = new \Slim\Slim(array(
     'templates.path' => './views',
     'log.enabled' => true,
@@ -36,10 +38,11 @@
 
   $app->setName('reach.k3wl.net');
 
-  $app->get('/', function () use ($app, $User) {
+  $app->get('/', function () use ($app, $User, $Helper) {
       $app->render('home.php', array(
         'app'=>$app,
-        'User'=>$User
+        'User'=>$User,
+        'Helper'=>$Helper
       ));
   })->name('home');
 
@@ -110,6 +113,16 @@
     }
     $app->redirect($app->urlFor('channel', array('username'=>$username)));
   })->name('activateChannel');
+
+  $app->get('/d/:username/:channel', function ($username, $channeluniquid) use ($app, $User) {
+    if (isset($_SESSION['isAuthed']) && $_SESSION['isAuthed']) {
+        if (isset($_SESSION['UserName']) && $_SESSION['UserName'] == $username) {
+          $User->setName($username);
+          $User->deleteChannel($channeluniquid);
+        }
+    }
+    $app->redirect($app->urlFor('channel', array('username'=>$username)));
+  })->name('deleteChannel');
 
   $app->post('/l', function () use ($app, $User){
     if ($app->request->post('captcha') == NULL) {
