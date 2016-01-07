@@ -31,6 +31,9 @@ $app->render('webheader.php', array(
       }
     ?>
 
+    <div class="alert alert-info" role="alert"> New features online since <?=$Helper->timeago(filemtime(__FILE__));?>: You can delete channels! Yaay! ;-)
+    </div>
+
   <?php #stop changing ?>
 </div>
 <?php
