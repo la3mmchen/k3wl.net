@@ -16,7 +16,13 @@
   " data-toggle="tooltip" data-placement="top" title="Turn on/off"><span class="badge"><?=$Channel->ChannelDetails;?></span><?=$Channel->ChannelName;?>
   </button></a>
   <p class="text-right">
+
+
   <button class="btn btn-info btn-xs" type="button"><span aria-hidden="true" class="glyphicon glyphicon-wrench"></span> </button>
-  <button class="btn btn-warning btn-xs" type="button"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></button>
+
+  <a href="<?=$app->urlFor('deleteChannel', array('username'=>$User->UserName, 'channel'=>$Channel->ChannelId));?>">
+  <button class="btn btn-warning btn-xs" type="button"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span> </button>
+  </a>
+
 </p>
 </div>
