@@ -75,6 +75,19 @@ class User {
       $this->writeChanges();
   }
 
+  public function deleteChannel($channel) {
+      $arrayPos;
+      $ChannelObject;
+      foreach ($this->UserChannels as $i => $value) {
+        if (preg_match('/'.$channel.'/', $value)) {
+          $arrayPos = $i;
+          break;
+        }
+      }
+      unset($this->UserChannels[$i]);
+      $this->writeChanges();
+  }
+
   public function writeChanges() {
     unset($this->isAuthed);
     file_put_contents('localstore/'.$this->UserName.'.json', json_encode($this));
