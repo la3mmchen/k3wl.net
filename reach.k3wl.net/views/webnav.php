@@ -8,6 +8,12 @@
        </li>
        <?php if (isset($_SESSION['isAuthed']) &&$_SESSION['isAuthed']) {?>
          <li role="presentation"
+           <?php if (isset($site) && preg_match('/users/', $site))
+              echo 'class="active"'; ?>
+           ><a href="<?=$app->urlFor('users', array('type'=>'all'));?>"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
+       <?php } ?>
+       <?php if (isset($_SESSION['isAuthed']) &&$_SESSION['isAuthed']) {?>
+         <li role="presentation"
            <?php if (isset($site) && preg_match('/channel/', $site))
               echo 'class="active"'; ?>
            ><a href="<?=$app->urlFor('channel');?>"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a></li>

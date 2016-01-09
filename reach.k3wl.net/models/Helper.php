@@ -1,6 +1,7 @@
 <?php
 
 class Helper {
+  private $localstore = 'localstore/';
 
   public function timeago($timestamp) {
      $full = false;
@@ -30,6 +31,10 @@ class Helper {
 
      if (!$full) $string = array_slice($string, 0, 1);
      return $string ? implode(', ', $string) . ' ago' : 'just now';
+  }
+
+  public function listUsers() {
+    return  preg_replace('/.json/', '',  array_diff(scandir($this->localstore.'pub/'), array('..', '.')));;
   }
 }
 

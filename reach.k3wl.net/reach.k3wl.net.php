@@ -62,6 +62,20 @@
     }
   })->name('user');
 
+  $app->get('/u/:type', function ($type) use ($app, $User, $type, $Helper) {
+    if (isset($_SESSION['isAuthed']) && $_SESSION['isAuthed']) {
+      $users =
+      $app->render('users.php', array(
+        'app'=>$app,
+        'User'=>$User,
+        'Users'=>$Helper->listUsers()
+      ));
+    }
+    else {
+      $app->redirect($app->urlFor('home'));
+    }
+  })->name('users');
+
   $app->get('/profile', function () use ($app, $User) {
     if (isset($_SESSION['isAuthed']) && $_SESSION['isAuthed']) {
       $User->setName($_SESSION['UserName']);
