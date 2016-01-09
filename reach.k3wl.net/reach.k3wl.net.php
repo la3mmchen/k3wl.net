@@ -138,6 +138,7 @@
         $User->UserName = $app->request->post('user');
         $User->UserPassword = password_hash($app->request->post('pass'), PASSWORD_DEFAULT);
         $User->UserId = uniqid();
+        $User->setLocalFile();
         $_SESSION['UserName'] = $User->UserName;
         $_SESSION['isAuthed'] = true;
         $User->writeChanges();
@@ -154,9 +155,11 @@
       $User->setName($_SESSION['UserName']);
       if ($app->request->post('UserPublic')) {
         $User->UserPublic = true;
+        $User->goingPublic();
       }
       else {
         $User->UserPublic = false;
+        $User->goingPrivate();
       }
 
       if ($app->request->post('UserPassword')&& $app->request->post('UserPassword') != "") {
