@@ -8,7 +8,8 @@ class User {
   public $UserPassword = "";
   public $UserChannels = array();
   public $UserPublic = false;
-  private $localFile = "";
+  public $localFile = "";
+  public $oldFile = "";
 
   public function __construct() {
 
@@ -60,11 +61,11 @@ class User {
       $this->localFile = 'localstore/'.$this->UserName.'.json';
       return true;
     }
-    else if (file_exists('localstore/pub/'.$this->UserName.'.json')) {
+    elseif (file_exists('localstore/pub/'.$this->UserName.'.json')) {
       $this->localFile = 'localstore/pub/'.$this->UserName.'.json';
       return true;
     }
-    else if (file_exists('localstore/priv/'.$this->UserName.'.json')) {
+    elseif (file_exists('localstore/priv/'.$this->UserName.'.json')) {
       $this->localFile = 'localstore/priv/'.$this->UserName.'.json';
       return true;
     }
@@ -117,6 +118,10 @@ class User {
 
   public function writeChanges() {
     unset($this->isAuthed);
+    $localfile = $this->localFile;
+    if (file_exists($this->oldFile)) {
+      unlink($this->oldFile);
+    }
     file_put_contents($this->localFile, json_encode($this));
     $this->isAuthed = true;
   }
@@ -127,7 +132,8 @@ class User {
 
   public function goingPublic() {
     if (file_exists($this->localFile)) {
-      rename($this->localFile, 'localstore/pub/'.$this->UserName.'.json');
+      $this->oldFile = $this->localFile;
+      $this->localFile = 'localstore/pub/'.$this->UserName.'.json';
     return true;
     }
     return false;
@@ -135,8 +141,9 @@ class User {
 
   public function goingPrivate() {
     if (file_exists($this->localFile)) {
-      rename($this->localFile, 'localstore/priv/'.$this->UserName.'.json');
-    return true;
+      $this->oldFile = $this->localFile;
+      $this->localFile = 'localstore/priv/'.$this->UserName.'.json';
+      return true;
     }
     return false;
   }
